@@ -1,0 +1,1 @@
+# Repo for notes on AI 901: Intro to AI on Azure
