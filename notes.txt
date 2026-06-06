@@ -1,0 +1,144 @@
+AI-901T00-A Introductio to AI in Azure 
+
+https://learn.microsoft.com/en-us/training/courses/ai-901t00?wt.mc_id=esi_ai_content_wwl#course-syllabus
+
+
+Two Learning Paths
+- AI concepts for developers and technology professionals
+- Get started with AI applications and agents on Azure
+
+
+
+# Intro to generativ AI and agents
+# AI concepts for developers and technology professionals
+
+
+
+Generative AI and agents
+
+agent:  LLM + instructions + tools
+  - engage via prompts
+
+
+NLP: Natural Language Processing
+
+text >> tokens (words / partial words / punctuation)
+text analysis: 
+    - language detection
+    - test classification (sentiment analysis) 
+    - key-term extraction
+    - summarization
+  statistical and semantic matches from text to LLM
+
+
+Speech Recognition
+- Speech to Text
+  - audio waves to text
+- Speech Synthesis
+  - text tokens to audio signals (speech)
+
+
+Computer Vision
+
+model trained on labeled images
+ - pixels map to labels
+
+types: 
+ - image classification
+ - object detection 
+ - semantic segmentation 
+   - identify individual pixels that make up an object 
+ - multi-modal models
+   - combine visual features and associated text descriptions
+
+
+Information Extraction:
+
+extract information and assign to fields
+ - combine OCR + analytical model 
+    - identify text and interprest individual fields (date, etc)
+
+
+Responsible AI
+
+guardrails to prevent harmful generation 
+
+- fairness
+- reliability / safety
+- privacy and security
+- inclusiveness
+- accountability
+
+
+
+# Intro to natual language processing concepts
+
+
+Text Analysis:
+ - language detection
+ - key term extraction
+ - entity detection 
+ - PII detection
+ - Text classification
+ - Sentiment Analysis
+ - Text summarization
+
+
+# Tokenization
+
+words broken down to tokens and given unique id
+
+Text Normalizaton:  remove punctuation, all lower case
+Stop Word Removal:  words removed from analysis ("the", "a", "it")
+N-gram Extraction:  multi-term phrases "aritificail intelligence"
+Stemming         :  consolidate words by stripping endings "s", "ing", "ed"
+Lemmatization    :  reduce words to base form ("lemma") uses linguistic rules:
+                     "running" ->> "run",  "global" ->> "globe"
+Parts of Spech (POS) tagging :  labeling each token with grammatical category (noun, verb, adjective, adverb)
+
+# Statistical text analysis
+
+- count each token (freq analysis)
+- bag of words
+- Naive Bayes
+- sentiment analysis
+- TextRank: sentences as nodes and ranked w/ weighted edges
+
+# Semantic language models
+
+meaningful relationships between text tokens
+vector based representation of tokens
+    - each vector elements "embeds" a semantic attribute
+        - paths in multi-dimensional space
+        i.e. cat and dog in a similar direction that is different than "tree"
+                cosine similarity between cat and dog is higher than tree
+    - can do vector arithmatic: 
+        i.e. vector for "dog" + vector for "young" == vector for "puppy" 
+        i.e. vector for "cat" + vector for "young" == vector for "kitten" 
+analogical reasoning:
+    puppy is to dog as kitten is to ?
+      - kitten - puppy + dog =   >> cat
+
+cosine_similarity(A,B) = (A * B) / ( ||A|| * ||B|| )
+
+A * B == dot product
+||A|| == magnitude of vector
+
+Use semantic models for: 
+ - text summarization
+ - keyword extraction
+ - named entity recognition
+ - text classification
+
+
+## MAP LAST HERE: 
+https://learn.microsoft.com/en-us/training/modules/introduction-ai-speech/
+
+
+
+
+
+
+
+
+.
