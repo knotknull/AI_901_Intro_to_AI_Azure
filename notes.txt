@@ -290,6 +290,97 @@ speech synthesis pipeline:
 
 
 # Introduction to computer vision concepts
+https://learn.microsoft.com/en-us/training/modules/introduction-computer-vision/
+
+## Computer vistion tasks / techniques
+ - image classification 
+    - trained on large number of images w/ text label
+
+ - object detection
+    - examine multiple regions in an image to find individual objects 
+    - predicts object w/ bounding box around object in image
+
+ - semantic segmentation 
+    - model trained to find objects and classify individual pixels of object they belong to in the image
+    - precise prediction of the location of objects in the image
+
+ - contextual image analysis 
+    - latest multimodal vision models trained to find contextual relationships between objects and text that describes them
+      - i.e. apple, man, eating
+    - can determine what objects and activies are depicted
+
+
+## Images and image processing
+- images are aray of values 
+    - B/W  : one array with 0-255 gray scale (white to black) 
+    - color: three arrays RBG with each array having 0-255 scale of R/G/B
+
+- filters alter values of pixels
+  - filter can be one ore more arrays of pixel values called kernels
+  - kernels are "convolved across image (scanned left to right) 
+      - applies weights across image and results in new image 
+
+
+## Convolutional Neural Networks (CNN)
+
+Train CNN via: 
+ 1. images w/ labels fed into netowrk 
+ 2. layers of fileters used to extract features form each images and fed thru network 
+    - filter kernesl start w/ randomly assigned weights and generate arrays of numeric values: feature naps
+    - additional layers may pool / downsize feature maps to create smaller arrays that emphasize key visual features 
+ 3. feature maps are flattened into single dimensional array of feature values
+ 4. feature values are fed into fully connected neural network 
+ 5.  output layer of the neural network uses a softmax or similar function to produce a result that contains the 
+     probablity value for each possible class
+ 
+during training outputs are compared to to actual label.  The loss is calculated and weights of fully connected 
+neural network and filter kernels are modified to reduce loss.  Repeat until optimal set of weights has been learned 
+and then saved.
+ 
+
+## Vision transformers and multimodal models
+
+Transformers for Semantic modeling for language
+ - represents tokens (word or phrases) as vector-based embedding
+ - transformers use "attention" determine context with other tokens
+     - embedding value (multi-dimensional vector) applies token to relation of other tokens
+     - tokens that are semantically similar (wheel, tire, car) are encoded in similar vector directions 
+        vs. unassociated vectors  (car, park, plant)
+
+
+Semantic model for images:  Vision Transformers
+Vision Transformers:
+ - trained on large volume of images 
+ - transformer extracts patches of pixes (sections of images) and generate linear vector 
+    - utilizes locaton within picture
+ - contextual relation between vectors
+ - vectors embed values like: color, shape, contrast, texture
+ - creates a map of visual features: tree, leaf, face, hat, etc.
+
+Multimodal model
+ - can combine linguistic and visual vectors using cross-model attention
+    - combines language and images in unified spatial vector 
+        - vector for word of tree is close to vector for image of tree
+
+
+## Image Generation
+Same multi-modal used to create natual language responses to visual input can be "reversed" 
+to generate images from text input. 
+
+Image created via diffusion: 
+ - starts with random noise 
+ - iteratively removes noise to get to image that is described by text
+
+( NOTE: same process used for creating videos )
+
+
+# Introduction to AI-powered information extraction concepts
+https://learn.microsoft.com/en-us/training/modules/introduction-information-extraction/
+
+
+
+
+
 
 
 
