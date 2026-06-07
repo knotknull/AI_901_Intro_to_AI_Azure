@@ -378,8 +378,152 @@ Image created via diffusion:
 https://learn.microsoft.com/en-us/training/modules/introduction-information-extraction/
 
 
+overview of information extraction
+
+## OCR: text detection and extraction
+
+Optical Character Recognition pipeline: 
+ 1. Image acquistion and input
+ 2. Preprocessing and image enhancement
+    - noise reduction
+    - contrast adjustment
+    - skew correction 
+    - resolution optimization 
+ 3. Text region detection
+    - layout analysis 
+        - Semantic segmentation networks: U-Newt, Mask R-CNN 
+        - Layout analysis: LayoutLM, PubLayNet-trained models
+    - text block identification
+    - reading order determination
+    - region classification
+ 4. Character recognition and classification
+    - feature extraction
+    - pattern matching  (ResNet, DenseNet, EfficientNet)
+    - context analysis  (LTSM, BERT)
+    - confidence scoring  
+ 5. Output generation and post-prosessing 
+    - text compilation (RNNs and Long Short-Term Memory LTSM)
+    - format preservation 
+    - coordinate mapping 
+    - quality validaiton
 
 
+## Field extraction and mappint
+field extraction pipeline 
+
+1. OCR output ingestion
+    - raw text context
+    - positional metadata
+    - confidense score
+    - layout information
+
+2. Field detection and candidate indentification
+    - template based detection
+    - machine learning
+
+3. Field mapping and association
+    - key-value pairing techniques
+        - proximity analysis
+        - linguistic patterns
+    - Table and structured content
+    - Confidence scoring and validation
+
+4. Data normalization and  mapping and association
+    - format standardization
+        - data normalizatio
+        - currency and numeric processing
+        - text standardization
+    - data validation and quality assurance
+        - rule based validation
+        - statistical validation
+
+4. Integration with business processes and systems
+    - schema mapping
+        - database schemas
+        - api payloads
+        - message queues
+        - field renaming
+        - data type conversion 
+        - conditional logic 
+    - Quality metrics and reporting
+        - field confidence scores
+        - document-level quality assessment
+        - error categorization
+
+
+## Azure Document Intelligence in Foundry Tools
+https://azure.microsoft.com/products/ai-foundry/tools/document-intelligence
+
+## Azure Content Understanding in Foundry Tools
+https://azure.microsoft.com/products/ai-foundry/tools/content-understanding
+
+
+
+
+#######################################################################################################
+# Getting Started with AI Applicatins and agents on Azure
+#######################################################################################################
+
+https://learn.microsoft.com/en-us/training/paths/get-started-ai-apps-agents/
+
+Azure Structure 
+                                                                                         ┌|┐        
+                                                                                         │|│        
+                                                                                         │|│        
+                                                                                         │|│        
+     ┌─────────────────────────────────────────────────────────────────────────────────┐ │|│        
+     │  Tenant                                                                         │ │|│        
+     │     ┌────────────────────────────────────────────────────────────────────┐      │ │|│        
+     │     │   Subscription                                                     │      │ │|│        
+     │     │                                                                    │      │ │|│        
+     │     │     ┌──────────────────────────────────────────────────────────┐   │      │ │|│        
+     │     │     │   Resource Group                                         │   │      │ │|│        
+     │     │     │                                                          │   │      │ │|│        
+     │     │     │                                                          │   │      │ │|│        
+     │     │     │   ┌──────────┐        ┌──────────┐       ┌──────────┐    │   │      │ │|│        
+     │     │     │   │          │        │          │       │   AI     │    │   │      │ │|│        
+     │     │     │   │ compute  │        │ storage  │       │          │    │   │      │ │|│        
+     │     │     │   │          │        │          │       │ Foundary │    │   │      │ │|│        
+     │     │     │   └──────────┘        └──────────┘       └──────────┘    │   │      │ │|│        
+     │     │     │                                                          │   │      │ │|│        
+     │     │     │                                                          │   │      │ │|│        
+     │     │     │                                                          │   │      │ │|│        
+     │     │     └──────────────────────────────────────────────────────────┘   │      │ │|│        
+     │     │                                                                    │      │ │|│        
+     │     │                                                                    │      │ │|│        
+     │     └────────────────────────────────────────────────────────────────────┘      │ │|│        
+     │                                                                                 │ │|│        
+     └─────────────────────────────────────────────────────────────────────────────────┘ │|│        
+                                                                                         │|│        
+                                                                                         │|│        
+                                                                                         └|┘        
+                                                                                      Azure Portal  
+                                                                                                    
+                                                                                                    
+## Developing AI Apps on Azure
+
+Security and Networking 
+  - Entra ID (RBAC)
+  - Azure Key Vault
+
+Hosting and Scaling 
+  - Azure Kubernetes Service  (AKS)
+  - Azure App Service 
+
+Data Storage
+  - Azure SQL Database 
+  - CosmosDB
+  - Azure Database for Postgres
+
+AI Capabilities
+  - Microsoft Foundry 
+    - develop and operate AI agents on Azure
+
+
+MAP LAST HERE: 
+
+## Microsoft Foundry for AI
+https://learn.microsoft.com/en-us/training/modules/get-started-with-ai-in-azure/4-microsoft-foundry?pivots=text
 
 
 
