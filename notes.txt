@@ -131,13 +131,165 @@ Use semantic models for:
  - text classification
 
 
-## MAP LAST HERE: 
-https://learn.microsoft.com/en-us/training/modules/introduction-ai-speech/
+# Intro to AI speech concepts
+
+Speech-enabled solutions
+ - customer service / support
+ - voice assited agents
+ - meeting transcription
+ - healthcare documentation
+ - accessability
+ - notification / alerts
+ - elearning / training
+
+Considerations: 
+  - audio quality
+  - language detection / support
+  - privacy compliance
+  - latency expectations
+  - accessability standards
+
+## Speech recognition
+
+speech to text 
+- capture analog as digital wave form
+- convert energy of signal at different frequencies
+    -feature values
+      -quantify feature strengths to vectors 
+    -feed feature vectors into aucoustic model
+      -predicts most probably phoeneme for each feature
+    -predicted phoenemes fed to language model
+    -post processing: capitalization, punctuation etc.
+
+Detailed process: Speech to text
+ - capture soundwave via microphone to digital signal
+    - sample @ 16k per second (16kHz)
+    - store as numeric value
+      - filters applied at this point to remove background noise, hums, clicks, etc
+
+ - preprocess waveform 
+    - MFCC:  Mel-Frequency Cepstral Coefficients
+      - extract technique mimics human ear perception
+        - emphasizes frequencies where speech energy concentrates
+
+How MFCC works:
+1. divide audio into frames, split into overlapping 20-30 ms windows
+
+2. apply fourier transform: 
+  - convert each frame from time domain to frequency domain, which piteches present
+
+3. map to Mel scale
+  - adjust frequency bins to human hearing ranges (low pitches better than high ones)
+
+4. extract coefficients: 
+  - compute a smallset of numbers (13 coefficients) that summarize the spectral shape of each frame
+    ex. 
+        frame 100: [ -113.2, 45.3, 12.1, -3.4, .....] 
+        frame 101: [ -111.7, 44.3, 11.7, -3.2, .....] 
+        frame 102: [ -109.6, 43.7, 11.3, -2.8, .....] 
+
+Acoustic modeling: 
+  - models that learn phoenemes from audio features
+
+modern models you transformer architectures
+  - process vecotrs and predicts phoeneme
+
+How Transformer Model WOrks: 
+  - attention mechanism:
+    - model examines surrounding frames to resolve ambiguity 
+      /t/ is different in top vs. bat
+
+  - parallel processing: 
+    - transformers analyze multiple frame simultaneously
+
+  - contextualized predictions;
+    - network learns certain phoeneme sequences occur frequently in natural speech
+
+  - output is probability distribution of phoenems for each audio frame:
+      - 80% confidence for /t/ vs 15% for /p/ vs 5% for others
+
+Language Modeling: 
+  - applies knowledge of vocabulary, grammar, common word patterns
+  - Statistical patterns: 
+      - model knows "weather is nice" appears more often than "whether is nice"
+  - Context awareness
+      - knowing when to expect a verb over a known i.e. "I need to ..."
+  - Domain adaptation
+      - models trainged on medical terminology improve accuracy
+
+Decoding: 
+  - algos that search thru millins of possible word sequences to find best match for acoustic and language predictions
+  - Beam search decoding 
+    - most common technique
+    - short list (beam) of top-scoring partial transcriptions while processing each frame
+      - expands hypothesis with next most likely word 
+        - prunes low-scoring paths
+        - keeps best candidates
+
+Post processing: 
+ - decoder produces raw text that requires cleanup
+ - applies formating rules and corrections for readability / accuracy
+    - capitalization, punctuation, number reformatting, remove inappropriate  words, "three P M to 3 PM", confidence scoring 
+
+
+speech to text pipeline: 
+ capture >> pre-processing >> acoustic modeling >> language modeling >> decoding  >> post-processing 
+
+
+
+## Speech synthesis
+
+Process to synthisize speech:
+
+- Standardize the text
+  - prepares text for pronunciation by expanding abbreviations, numbers, symbols
+      -i.e.  Dr. becomes "Doctor" and "3 items" becomes three items,  "$" to dollars
+
+- Linguistic analysis
+  - Map text to phonemes
+  - grapheme-to-phoneme (G2P) 
+    - conversion maps written letters to pronunciation sounds
+    - modern G2P systems use neural networks trained on pronunciation dictionaries
+
+- Prosody generation: determin pronunciation
+  - prosody: rhythm, stress, intonation patterns
+    - pitch, duration, intensity, pauses, stress patterns
+
+  - NOTE: transformer neural networks used to predict prosody, 
+          Transformers excel at understanding context across entire sentences
+
+  - Prosody process
+    - input encoding
+      - transfromer preceives phoeneme sequence w/ linguistic features
+    - contextual analysis 
+      - self-attention identifies relationship between words
+    - prosody prediction
+      - model outputs predicted values for pitch, duration, and energy at each phoeneme
+    - style factors
+      - considers speaking style (neutral, expressive, etc.)
+
+- Generate audio
+  - generates final audio waveform based on phoeneme sequence and prosody specs
+  - neural vocoders:  
+    - deep learning models that generate audio samples  
+      - i.e. WaveNet, WaveGlow, HiFi-GAN
+  - synthesis process:
+      - acoustic feature generation  
+          - acoustic model (transformer) converts phoeneme and prosody targets into 
+            mel-spectograms - visual representation of sound frequencies over time
+      - vocoding
+          - neural vocoder converts mel-spectograms to raw audio waveforms (16kHz - 48kHz samples per second)
+      - post processing
+          - applies filtering, normalization or audio effect s
+
+speech synthesis pipeline: 
+ text normalization >> linguistic analysis  >>  Prosody generation  >> Speech synthesis  
 
 
 
 
 
+# Introduction to computer vision concepts
 
 
 
