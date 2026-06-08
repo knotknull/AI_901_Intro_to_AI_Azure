@@ -520,12 +520,163 @@ AI Capabilities
     - develop and operate AI agents on Azure
 
 
-MAP LAST HERE: 
-
 ## Microsoft Foundry for AI
 https://learn.microsoft.com/en-us/training/modules/get-started-with-ai-in-azure/4-microsoft-foundry?pivots=text
 
 
+Microsoft Foundry is a unified, enterprise-grade platform-as-a-service (PaaS) for 
+building, deploying, and managing AI applications and agents. It consolidates models, 
+agent orchestration, monitoring, and governance tools in one platform, offering 
+production-grade infrastructure and security.
 
+Foundry offers powerful capabilities for developers, including the ability to choose from a 
+wide range of models, use those models to build agents, connect those agents to tools, 
+and integrate knowledge by using Foundry IQ, the centralized connection point for data sources.
+
+
+                                                                                             
+        Microsoft Foundry                                                                    
+      ┌───────────────────────────────────────────────────────┐    
+      │                                                       │    
+      │   Foundry Resource                                    │    
+      │                                                       │    
+      │     ┌───────────────────────────────────────┐         │    
+      │     │                                       │         │    
+      │     │           Foundry Project             │         │    
+      │     │                                       │         │    
+      │     │    * Models          * Agents         │         │    
+      │     │                                       │         │    
+      │     │    * Tools           * Knowledge      │         │    
+      │     │                      ( Foundry IQ)    │         │    
+      │     └───────────────────────────────────────┘         │    
+      │                                                       │    
+      └───────────────────────────────────────────────────────┘    
+
+Models:
+GPT-5, Claude Opus / Sonnet, Mistral, Cohere, Meta LLaMA, Deep Seek, xAI Grok, 
+Black Forest Labs, gated Hugging Face Models
+
+Full lifecycle support enables deployment per region, 
+customizable deployment types (standard, provisioned, batch), version control, 
+governance support w/ Responsible AI and content safety
+                                                                                             
+
+Agents:
+Agents can: reason over inputs, call tools, interact w/ data and automate workflows 
+using built-in orchestration.  Foundry handles underlying corrdination, including: 
+ - message threading,
+ - tool execution
+ - safety controls
+ - observability
+
+developers focus on building agent's goals and capabilities. Isomg low-code or code-first workflows, 
+teams can create multi-agent systems that work with project resources such as: 
+ - documents
+ - datasets
+ - search indexes
+ - connections to external systems
+ - integration with Azure Functions / Microsoft Fabric
+
+
+Tools:
+Azure services: speech, vision, language, document intelligence, etc.
+> 12 services that can be used separately or together
+  - Azure Vision  : analyze images
+  - Azure Language: summarize text 
+  - Azure Speech  : convert speect to text
+
+
+Knowledge:
+Foundry IQ permission-aware, multi-source knowledge layer that gives agents accuratge, 
+grounded answers using an organizations own data. 
+
+Create configurable knowledge base made up of internal / external knowledge sources:
+Azure Blob Storage, SharePoint, OneLake, public web data and handles:
+ - indexing 
+ - doument chunking 
+ - vector embedding
+ - metadata extraction
+
+When an agent queries knowledge base, Foundry IQ uses agentic retrieval to break the question into 
+subqueries, search multiple sources in parallel and return relevant, citation-backed information 
+while enforcing user permissions and Microsoft Purview sensitivity labels.
+
+Assets in AI solution are organized within a project.  Each project contained within a 
+Foundry resource, which provides model hosting and services.
+
+Foundry resource: Azure resource that provides the platform capabilities: 
+ - Models
+ - Foundry agent service
+ - deployment governance
+ - monitoring & observability
+ - security boundaries
+ - quoats and operational controls
+
+Foundry project: workspace inside a Foundry resource where you build AI apps / agents, evaluations.
+Project build and manage: 
+ - Agents
+ - Evaluations
+ - Files / datasets
+ - Flows (AI logic)
+ - Connections
+ - Project-specific settings
+
+One foundry resource for team / dept.  Many Foundry projects inside a Foundry resource.
+
+AI Client application: utilizes a model, data and applicatin logic to process and return results.
+
+Responsibilities of server in client-server Foundry: 
+1. receive the prompt
+2. run the interference on the model
+3. apply system instructions, asfety, context and more
+4. return the generated output
+
+
+## Using Microsoft Foundry endpoints
+
+Foundry resources accessed thru API endpoints via REST.
+
+https://<foundary-project>-resource.cognitiveservices.azure.com/openai/deployments/gpt-40/chat/completions?api-version=2024-05-01-preview
+
+
+2 types of Foundry endpoints:
+ - project-level endpoints
+ - model endpoints: prompts to deployed models
+
+
+TODO: Get started with Microsoft Foundry
+
+https://microsoftlearning.github.io/mslearn-ai-fundamentals/Instructions/Exercises/00-explore-foundry.html#clean-up
+https://ai.azure.com
+
+
+# Generative AI Models
+Discover models in Foundry's model catalog
+  - hub for models
+  - Models sold directly by Azure
+  - Models from Partners and Community
+
+Evaluate models by task:
+  Chat, coding, summarization, embeddings, multimodal, industry  / domain-specific
+
+Deploy models in Foundry:
+  - dev type: standars, global batch, regional providioned throughput
+
+Deployment params: 
+  - deployment type
+  - model version
+  - Tokens per minute
+
+Deployment as:
+  - compute resources allocated
+  - API endpoint 
+  - configuration
+  - monitoring / logging
+
+
+MAP: LAST HERE 
+
+Using a generative AI Model 
+https://learn.microsoft.com/en-us/training/modules/get-started-with-generative-ai-and-agents/3-using-generative-ai-models?pivots=text
 
 .
