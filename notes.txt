@@ -985,7 +985,321 @@ https://microsoftlearning.github.io/mslearn-ai-fundamentals/Instructions/Exercis
 
 # Getting started with computer vision in Azure
 
+computer vision: 
+ - defect detection
+ - medical imaging analysis
+ - shelf monitoirng
+ - autonomous vehicles
 
+
+gpt-4.1 / gpt-4.1-mini / gpt-4.1-nano 
+ - general purpose multimodal GPT models
+
+
+gpt-5 series (5.1, 5.2) 
+ - advanced multimodal models
+
+
+pip install openai
+
+import os
+from openai import OpenAI
+
+# Environment variables you set locally or in your app service:
+FOUNDRY_KEY = "... your key ..."
+ENDPOINT = "https://YOUR-RESOURCE-NAME.openai.azure.com/openai/v1/"
+MODEL_NAME = "your-model-deployment-name"  # e.g., "gpt-4.1-mini" deployed as "my-vision-deploy"
+
+client = OpenAI(
+    api_key=os.getenv("FOUNDRY_KEY"),
+    base_url=os.getenv("ENDPOINT"),
+)
+
+image_url = ""
+
+response = client.responses.create(
+    model=os.getenv("MODEL_NAME"),  # your deployment name 
+    input=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "input_text", "text": "What is in this image? Provide 3 bullet points."},
+                {"type": "input_image", "image_url": image_url}
+            ],
+        }
+    ],
+)
+
+print(response.output_text)
+
+
+
+# Image Generation models
+text to image inferencing
+
+
+
+import os
+import base64
+from openai import OpenAI
+
+# Required environment variables (example names)
+FOUNDRY_KEY="..."
+ENDPOINT="https://YOUR-RESOURCE-NAME.openai.azure.com/openai/v1/"
+MODEL_NAME="your-gpt-image-deployment-name"  # e.g., "gpt-image-1"
+
+client = OpenAI(
+    api_key=os.environ["FOUNDRY_KEY"],
+    base_url=os.environ["ENDPOINT"],
+)
+
+prompt = "A modern flat illustration of a robot holding a potted plant, clean vector style, pastel colors."
+
+response = client.responses.create(
+    model=os.environ["MODEL_NAME"],  # your deployment name in Foundry
+    input=prompt,
+    tools=[{"type": "image_generation"}],
+)
+
+image_base64 = next(
+    item.result for item in response.output
+    if item.type == "image_generation_call"
+)
+
+with open("foundry_generated.png", "wb") as f:
+    f.write(base64.b64decode(image_base64))
+
+print("Saved: foundry_generated.png")
+
+
+
+# Video Generation models
+
+- Sora 1
+
+# create video job
+
+curl -X POST "https://YOUR-RESOURCE-NAME.openai.azure.com/openai/v1/videos" \
+  -H "Content-Type: application/json" \
+  -H "api-key: $AZURE_OPENAI_API_KEY" \
+  -d '{
+    "model": "sora-2",
+    "prompt": "A cinematic close-up of raindrops sliding down a neon-lit window at night.",
+    "size": "1280x720",
+    "seconds": "8"
+  }'
+
+## poll job status until complete
+curl -X GET "https://YOUR-RESOURCE-NAME.openai.azure.com/openai/v1/videos/{video_id}" \
+  -H "api-key: $AZURE_OPENAI_API_KEY"
+
+
+## downloaded completed video
+curl -L "https://YOUR-RESOURCE-NAME.openai.azure.com/openai/v1/videos/{video_id}/content?variant=video" \
+  -H "api-key: $AZURE_OPENAI_API_KEY" \
+  --output output.mp4
+
+
+https://microsoftlearning.github.io/mslearn-ai-fundamentals/Instructions/Exercises/05a-image-analysis.html
+
+
+# Get started with AI powered information extraction in Azure
+
+
+Microsoft Azure Content Understanding in Foundry Tools
+  - extract documents, audio, video
+
+
+- understand schemas
+- analyzers
+    - applies AI analysis 
+
+
+
+
+python -m pip install azure-ai-contentunderstanding
+
+
+import os
+from azure.ai.contentunderstanding import ContentUnderstandingClient
+from azure.core.credentials import AzureKeyCredential
+
+endpoint = os.environ["FOUNDRY_ENDPOINT"]
+key = os.environ["FOUNDRY_KEY"]
+
+client = ContentUnderstandingClient(endpoint=endpoint, credential=AzureKeyCredential(key))
+
+# 1) start analysis with analyzer id + inputs
+analyzer_id = "prebuilt-invoice"
+inputs = [
+    {"url": "https://github.com/Azure-Samples/azure-ai-content-understanding-python/raw/refs/heads/main/data/invoice.pdf"}
+]
+
+# 2) wait for the Long Running Operation (LRO) to complete
+poller = client.begin_analyze(analyzer_id=analyzer_id, inputs=inputs)  # starts LRO
+result = poller.result()  # waits for completion (polling handled by SDK)
+
+# 3) read structured fields + markdown
+# The result typically includes extracted "fields" and "markdown" per input content item.
+for content in result.contents:
+    print(content.markdown)
+    print(content.fields)
+
+
+## Extract information from audio and video
+
+
+
+import os
+from azure.ai.contentunderstanding import ContentUnderstandingClient
+from azure.core.credentials import AzureKeyCredential
+
+# Endpoint and key for your Foundry resource
+endpoint = os.environ["FOUNDRY_ENDPOINT"]  # e.g., "https://<resource>.services.ai.azure.com/"
+key = os.environ["FOUNDRY_KEY"]
+
+client = ContentUnderstandingClient(
+    endpoint=endpoint,
+    credential=AzureKeyCredential(key)
+)
+
+# Choose a prebuilt analyzer for audio
+# (The documents module lists examples like prebuilt-audioSearch / prebuilt-videoSearch.)
+analyzer_id = "prebuilt-audioSearch"
+
+# Provide an input audio file (URL shown here; you can swap in your own accessible media URL)
+inputs = [
+    {"url": "https://<your-host>/samples/voicemail.wav"}
+]
+
+# Start analysis (asynchronous long-running operation)
+poller = client.begin_analyze(analyzer_id=analyzer_id, inputs=inputs)
+
+# Wait for completion (SDK polls under the hood)
+result = poller.result()
+
+# Inspect the structured output (JSON-like objects)
+for content in result.contents:
+    # Some analyzers may return a transcript and/or extracted fields depending on the analyzer and schema
+    print("=== MARKDOWN / TRANSCRIPT (if provided) ===")
+    print(getattr(content, "markdown", None))
+
+    print("\n=== EXTRACTED FIELDS ===")
+    print(getattr(content, "fields", None))
+
+
+https://microsoftlearning.github.io/mslearn-ai-fundamentals/Instructions/Exercises/06a-content-understanding.html
+
+
+
+
+     import sys
+     import json
+        
+     from azure.ai.contentunderstanding import ContentUnderstandingClient
+     from azure.ai.contentunderstanding.models import AnalysisInput, AnalysisResult
+     from azure.core.credentials import AzureKeyCredential
+     from azure.core.exceptions import AzureError
+     from azure.identity import DefaultAzureCredential
+        
+        
+     def main() -> None:
+         # Insert the following configurations.
+         # 1) AZURE_CONTENT_UNDERSTANDING_ENDPOINT - the endpoint to your Content Understanding resource.
+         endpoint = "https://<your-resource>.services.ai.azure.com/"
+        
+         # 2) CONTENT_UNDERSTANDING_KEY - your Content Understanding API key (optional if using DefaultAzureCredential).
+         key = ""
+        
+         # 3) FILE_URL - you can replace this with your own URL.
+         file_url = "https://contentunderstanding.ai.azure.com/assets/prebuilt/layout_checklist.jpg"
+        
+         # ANALYZER_ID - the ID of the analyzer to use.
+         analyzer_id = "prebuilt-layout"
+        
+         # API_VERSION - the API version to use.
+         api_version = "2025-11-01"
+        
+         # Set up Content Understanding client.
+         credential = AzureKeyCredential(key) if key and "" not in key else DefaultAzureCredential()
+         client = ContentUnderstandingClient(endpoint=endpoint, credential=credential, api_version=api_version)
+        
+         # [START analyze]
+         print(f"Analyzing with {analyzer_id} analyzer...")
+         print(f"  File URL: {file_url}\n")
+        
+         try:
+             poller = client.begin_analyze(
+                 analyzer_id=analyzer_id,
+                 inputs=[AnalysisInput(url=file_url)],
+             )
+             result: AnalysisResult = poller.result()
+         except AzureError as err:
+             print(f"[Azure Error]: {err.message}")
+             sys.exit(1)
+         except Exception as ex:
+             print(f"[Unexpected Error]: {ex}")
+             sys.exit(1)
+         # [END analyze]
+        
+         # [START output_result]
+         print("=" * 50)
+         print("Analysis result:")
+         print("=" * 50 + "\n")
+        
+         max_display_lines = 50
+         result_str = json.dumps(result.as_dict(), indent=2)
+         ret_lines = result_str.splitlines()
+        
+         if len(ret_lines) > max_display_lines:
+             print("\n".join(ret_lines[:max_display_lines]))
+             print(f"\n {len(ret_lines) - max_display_lines} more lines to be displayed...\n")
+         else:
+             print(result_str)
+         # [END output_result]
+        
+        
+     if __name__ == "__main__":
+         main()
+
+
+     # [START analyze]
+     print(f"Analyzing with {analyzer_id} analyzer...")
+     print(f"  File URL: {file_url}\n")
+        
+     try:
+         poller = client.begin_analyze(
+             analyzer_id=analyzer_id,
+             inputs=[AnalysisInput(url=file_url)],
+         )
+         result: AnalysisResult = poller.result()
+     except AzureError as err:
+         print(f"[Azure Error]: {err.message}")
+         sys.exit(1)
+     except Exception as ex:
+         print(f"[Unexpected Error]: {ex}")
+         sys.exit(1)
+     # [END analyze]
+
+
+
+
+
+     # [START output_result]
+     print("=" * 50)
+     print("Analysis result:")
+     print("=" * 50 + "\n")
+    
+     max_display_lines = 50
+     result_str = json.dumps(result.as_dict(), indent=2)
+     ret_lines = result_str.splitlines()
+    
+     if len(ret_lines) > max_display_lines:
+         print("\n".join(ret_lines[:max_display_lines]))
+         print(f"\n {len(ret_lines) - max_display_lines} more lines to be displayed...\n")
+     else:
+         print(result_str)
+     # [END output_result]
 
 
 
